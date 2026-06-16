@@ -1,0 +1,37 @@
+<script lang="ts">
+	import '@fontsource-variable/instrument-sans/index.css';
+	import '@fontsource-variable/newsreader/index.css';
+	import { BadgeCheck, Check, ChevronRight, MessageCircle, Radio, Users, Video } from '@lucide/svelte';
+	import ConceptNav from '$lib/concepts/ConceptNav.svelte';
+	import DetailDrawer from '$lib/concepts/DetailDrawer.svelte';
+	import Scorecard from '$lib/concepts/Scorecard.svelte';
+	import { alumniJourneys, cohorts, peerCheckIns, scholarshipById } from '$lib/concepts/data';
+
+	let activeCohort = $state('cohort-germany');
+	let joined = $state<string[]>(['cohort-germany']);
+	let checkedIn = $state(false);
+	let selectedId = $state('daad');
+	let detailOpen = $state(false);
+	const selectedCohort = $derived(cohorts.find((cohort) => cohort.id === activeCohort) ?? cohorts[0]);
+	const selected = $derived(scholarshipById(selectedId));
+
+	function toggleJoin(id: string) {
+		joined = joined.includes(id) ? joined.filter((item) => item !== id) : [...joined, id];
+	}
+</script>
+
+<svelte:head><title>Cohort Commons · ScholarAI Concepts</title></svelte:head>
+<div class="min-h-screen overflow-x-hidden bg-[#f1eee8] pb-28 font-[Instrument_Sans_Variable] text-[#24201d]">
+	<header class="border-b border-[#24201d]/15 px-5 py-6 md:px-8"><div class="mx-auto flex max-w-[1500px] flex-wrap items-center justify-between gap-4"><div><p class="text-[10px] font-bold uppercase tracking-[0.22em] text-[#bc385b]">Concept 15 · Peer intelligence</p><h1 class="mt-2 font-[Newsreader] text-4xl">Cohort Commons</h1></div><div class="flex items-center gap-2 rounded-full bg-[#e4d8dc] px-4 py-2 text-xs font-bold text-[#84324a]"><Radio size={14}/> 23 peers working now</div></div></header>
+	<main class="mx-auto grid max-w-[1500px] gap-5 px-4 py-5 lg:grid-cols-[280px_minmax(0,1fr)_340px] lg:px-8">
+		<aside class="space-y-5"><section class="rounded-[26px] bg-[#2b2427] p-4 text-white"><p class="px-2 text-[10px] font-bold uppercase tracking-[0.17em] text-[#d69aad]">Your circles</p><div class="mt-3 space-y-1">{#each cohorts as cohort}<button onclick={() => activeCohort = cohort.id} class={`w-full rounded-xl p-3 text-left ${activeCohort === cohort.id ? 'bg-[#bc385b]' : 'hover:bg-white/5'}`}><div class="flex items-center justify-between gap-2"><span class="text-sm font-semibold">{cohort.name}</span><span class="text-[10px] opacity-55">{cohort.members}</span></div><p class="mt-1 text-[10px] opacity-55">{cohort.focus}</p></button>{/each}</div></section><section class="rounded-[22px] border border-[#24201d]/15 p-4"><p class="text-xs font-bold uppercase tracking-[0.14em] text-[#84324a]">Why this is here</p><p class="mt-3 text-xs leading-5 text-black/50">Official evidence stays primary. Verified experience reports clarify process, tradeoffs, and recurring questions.</p></section><div class="hidden lg:block"><Scorecard concept="commons" compact/></div></aside>
+		<section class="space-y-5">
+			<div class="rounded-[30px] bg-[#bc385b] p-6 text-white md:p-8"><div class="flex flex-wrap items-start justify-between gap-5"><div><p class="text-[10px] font-bold uppercase tracking-[0.18em] text-white/60">Active cohort · {selectedCohort.members} members</p><h2 class="mt-3 font-[Newsreader] text-5xl leading-none">{selectedCohort.name}</h2><p class="mt-4 text-sm text-white/70">{selectedCohort.focus}</p></div><button onclick={() => toggleJoin(selectedCohort.id)} class="rounded-full bg-white px-5 py-2.5 text-xs font-bold text-[#84324a]">{joined.includes(selectedCohort.id) ? 'Joined' : 'Join cohort'}</button></div><div class="mt-8 flex flex-wrap gap-2"><span class="flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-xs"><Video size={14}/> {selectedCohort.next}</span><span class="flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-xs"><MessageCircle size={14}/> 6 recurring questions answered</span></div></div>
+			<section class="rounded-[26px] border border-[#24201d]/15 bg-[#faf8f3] p-5 md:p-6"><div class="flex items-end justify-between gap-4"><div><p class="text-[10px] font-bold uppercase tracking-[0.16em] text-[#84324a]">Verified journeys</p><h2 class="mt-2 font-[Newsreader] text-3xl">What changed the outcome?</h2></div><BadgeCheck size={22} class="text-[#bc385b]"/></div><div class="mt-5 grid gap-3 md:grid-cols-3">{#each alumniJourneys as journey}<button onclick={() => {selectedId = journey.scholarshipId; detailOpen = true}} class="flex flex-col justify-between rounded-2xl border border-[#24201d]/10 bg-white p-4 text-left"><div><div class="flex items-center gap-2 text-xs font-bold">{journey.name}{#if journey.verified}<BadgeCheck size={13} class="text-[#bc385b]"/>{/if}</div><p class="mt-1 text-[10px] uppercase tracking-wider text-black/35">{journey.destination} · {journey.year} · verified recipient</p><p class="mt-5 font-[Newsreader] text-xl leading-snug">“{journey.insight}”</p></div><span class="mt-5 flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[#84324a]">Inspect official evidence <ChevronRight size={12}/></span></button>{/each}</div></section>
+			<section class="rounded-[26px] border border-[#24201d]/15 bg-[#faf8f3] p-5"><div class="flex items-center justify-between"><div><p class="text-[10px] font-bold uppercase tracking-[0.16em] text-[#84324a]">Accountability room</p><h2 class="mt-2 font-[Newsreader] text-2xl">One visible promise this week.</h2></div><Users size={22}/></div><div class="mt-5 grid gap-2 sm:grid-cols-3">{#each peerCheckIns as checkin}<div class="rounded-xl bg-[#f0ebe7] p-3"><p class="flex items-center gap-1 text-xs font-bold">{checkin.person}{#if checkin.verified}<BadgeCheck size={12} class="text-[#bc385b]"/>{/if}</p><p class="mt-2 text-xs leading-5 text-black/50">{checkin.task}</p><p class="mt-2 text-[9px] uppercase tracking-wider text-black/30">{checkin.time}</p></div>{/each}</div><button onclick={() => checkedIn = true} class={`mt-4 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-xs font-bold ${checkedIn ? 'bg-[#e3eee5] text-[#376448]' : 'bg-[#2b2427] text-white'}`}>{#if checkedIn}<Check size={14}/> Checked in locally{:else}Check in: send reference brief{/if}</button></section>
+		</section>
+		<aside class="space-y-5"><section class="rounded-[24px] border border-[#24201d]/15 bg-[#faf8f3] p-5"><p class="text-xs font-bold uppercase tracking-[0.15em] text-[#84324a]">Recurring questions</p><div class="mt-4 divide-y divide-black/10">{#each ['How specific should the DAAD proposal be?','Does a recommender need to be a professor?','How do people budget for the first month?'] as question}<button class="flex w-full items-start justify-between gap-3 py-3 text-left text-sm"><span>{question}</span><ChevronRight size={14} class="mt-1 shrink-0 text-black/30"/></button>{/each}</div><p class="mt-3 text-[10px] leading-4 text-black/35">Answers combine official evidence with clearly labeled verified experiences.</p></section><section class="rounded-[24px] bg-[#e3d7db] p-5"><p class="text-xs font-bold uppercase tracking-[0.15em] text-[#84324a]">Next room</p><h3 class="mt-3 font-[Newsreader] text-2xl">Proposal clinic</h3><p class="mt-2 text-xs leading-5 text-black/45">Wednesday · 19:30 IST · 12 seats</p><button class="mt-4 w-full rounded-xl bg-[#bc385b] px-4 py-3 text-xs font-bold text-white">Reserve a simulated seat</button></section><div class="lg:hidden"><Scorecard concept="commons" compact/></div></aside>
+	</main>
+</div>
+<DetailDrawer scholarship={selected} bind:open={detailOpen}/>
+<ConceptNav current="commons"/>
