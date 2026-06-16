@@ -80,6 +80,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			scholarships: [],
 			total: 0,
 			fullName: null,
+			profile: null,
 			savedIds: [],
 			applicationsByScholarship: {},
 			profileCompleteness: calculateProfileCompleteness(null)
@@ -117,6 +118,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			scholarships: matches.scholarships,
 			total: matches.total,
 			fullName: profile?.full_name ?? null,
+			profile: profile ?? null,
 			savedIds,
 			applicationsByScholarship,
 			profileCompleteness
@@ -128,6 +130,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			scholarships: [],
 			total: 0,
 			fullName: profile?.full_name ?? null,
+			profile: profile ?? null,
 			savedIds: [],
 			applicationsByScholarship: {},
 			profileCompleteness
