@@ -37,7 +37,9 @@
 <Dialog.Root bind:open>
 	<Dialog.Portal>
 		<Dialog.Overlay class="fixed inset-0 z-[80] bg-[#04100b]/75 backdrop-blur-sm" />
-		<Dialog.Content class="dossier">
+		<Dialog.Content
+			class="fixed bottom-0 right-0 top-0 z-[90] w-full max-w-[44rem] overflow-y-auto border-l border-[#b99d62]/45 bg-gradient-to-b from-[#f3ead5] via-[#e8dcc2] to-[#dcccaa] p-5 text-[#302f27] shadow-[-24px_0_80px_rgba(0,0,0,0.42)] sm:p-8"
+		>
 			{#if file && scholarship}
 				<div class="flex items-start justify-between gap-4">
 					<div class="min-w-0">
@@ -51,7 +53,10 @@
 							{scholarship.provider}
 						</Dialog.Description>
 					</div>
-					<Dialog.Close class="close-button" aria-label="Close research file">
+					<Dialog.Close
+						class="grid place-items-center border border-[#b9a982] bg-transparent p-2 text-[#75694f]"
+						aria-label="Close research file"
+					>
 						<X size={16} />
 					</Dialog.Close>
 				</div>
