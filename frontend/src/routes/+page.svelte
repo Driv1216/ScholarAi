@@ -108,7 +108,7 @@
 	.site-header,
 	.hero,
 	.explain {
-		width: min(100% - 2rem, 1120px);
+		width: min(100% - 2rem, 1220px);
 		margin-inline: auto;
 	}
 
@@ -179,15 +179,15 @@
 
 	.hero {
 		display: grid;
-		gap: clamp(2rem, 6vw, 4.5rem);
-		min-height: min(760px, calc(100svh - 5rem));
+		gap: clamp(2rem, 5vw, 4rem);
+		min-height: min(720px, calc(100svh - 5rem));
 		align-items: center;
-		padding: clamp(2rem, 7vw, 5rem) 0 clamp(3rem, 7vw, 5.5rem);
+		padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(3rem, 6vw, 5rem);
 	}
 
 	@media (min-width: 900px) {
 		.hero {
-			grid-template-columns: minmax(0, 1fr) minmax(22rem, 27rem);
+			grid-template-columns: minmax(0, 1fr) minmax(20rem, 27rem);
 		}
 	}
 
@@ -201,6 +201,10 @@
 		}
 	}
 
+	.hero-copy {
+		min-width: 0;
+	}
+
 	.eyebrow,
 	.preview-top span,
 	.readiness span,
@@ -212,10 +216,10 @@
 	}
 
 	.hero-copy h1 {
-		max-width: 46rem;
+		max-width: 42rem;
 		margin-top: 0.9rem;
-		font: 650 clamp(3.2rem, 7vw, 5.3rem) / 0.92 "Newsreader Variable", serif;
-		letter-spacing: -0.05em;
+		font: 650 clamp(3rem, 5.4vw, 4.85rem) / 0.95 "Newsreader Variable", serif;
+		letter-spacing: -0.035em;
 		color: #fff1cf;
 	}
 
@@ -244,6 +248,8 @@
 
 	.product-preview {
 		width: 100%;
+		max-width: 27rem;
+		justify-self: end;
 		border: 1px solid rgba(185, 157, 98, 0.28);
 		background: rgba(10, 25, 18, 0.76);
 		box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
@@ -392,7 +398,7 @@
 		}
 
 		.hero-copy h1 {
-			font-size: clamp(2.85rem, 14vw, 3.85rem);
+			font-size: clamp(2.65rem, 12vw, 3.5rem);
 		}
 
 		.hero-actions,
