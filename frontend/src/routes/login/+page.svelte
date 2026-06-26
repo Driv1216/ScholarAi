@@ -8,11 +8,11 @@
 	let error = $state('');
 	let loading = $state(false);
 
-	const redirectTo = 'http://localhost:5173/auth/callback';
-
 	async function signInWithGoogle() {
 		error = '';
 		loading = true;
+
+		const redirectTo = `${window.location.origin}/auth/callback`;
 
 		const { error: signInError } = await supabase.auth.signInWithOAuth({
 			provider: 'google',

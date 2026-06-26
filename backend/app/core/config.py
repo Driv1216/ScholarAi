@@ -32,7 +32,10 @@ def _frontend_origins() -> tuple[str, ...]:
 @dataclass(frozen=True)
 class Settings:
     SUPABASE_URL: str = os.getenv("SUPABASE_URL", "")
-    SUPABASE_SERVICE_KEY: str = os.getenv("SUPABASE_SERVICE_KEY", "")
+    SUPABASE_SERVICE_KEY: str = os.getenv(
+        "SUPABASE_SERVICE_ROLE_KEY",
+        os.getenv("SUPABASE_SERVICE_KEY", ""),
+    )
     FRONTEND_ORIGINS: tuple[str, ...] = _frontend_origins()
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
 
