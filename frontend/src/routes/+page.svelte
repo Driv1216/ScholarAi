@@ -1,11 +1,5 @@
 <script lang="ts">
-	import { Archive, ArrowRight, BookMarked, CheckCircle2, ClipboardList, FileWarning } from '@lucide/svelte';
-
-	const lanes = [
-		{ label: 'Needs Proof', detail: '2 blockers', icon: FileWarning },
-		{ label: 'Apply Track', detail: '4 tasks open', icon: ClipboardList },
-		{ label: 'Watchlist', detail: '7 saved', icon: BookMarked }
-	];
+	import { Archive, ArrowRight } from '@lucide/svelte';
 </script>
 
 <svelte:head>
@@ -44,33 +38,6 @@
 				<a class="secondary-action" href="/signup">Create account</a>
 			</div>
 		</div>
-
-		<aside class="product-preview" aria-label="ScholarAI product preview">
-			<div class="preview-top">
-				<span>Research desk</span>
-				<strong>Today</strong>
-			</div>
-			<div class="readiness">
-				<div>
-					<span>Folio readiness</span>
-					<strong>82%</strong>
-				</div>
-				<i aria-hidden="true"><b></b></i>
-			</div>
-			<div class="lane-list">
-				{#each lanes as lane}
-					{@const Icon = lane.icon}
-					<div class="lane-row">
-						<Icon size={16} />
-						<div>
-							<strong>{lane.label}</strong>
-							<span>{lane.detail}</span>
-						</div>
-						<CheckCircle2 size={15} />
-					</div>
-				{/each}
-			</div>
-		</aside>
 	</section>
 
 	<section class="explain" aria-label="How ScholarAI helps">
@@ -125,8 +92,7 @@
 	.site-header nav a,
 	.hero-actions,
 	.primary-action,
-	.secondary-action,
-	.lane-row {
+	.secondary-action {
 		display: flex;
 		align-items: center;
 	}
@@ -178,36 +144,18 @@
 	}
 
 	.hero {
-		display: grid;
-		gap: clamp(2rem, 5vw, 4rem);
+		display: flex;
 		min-height: min(720px, calc(100svh - 5rem));
 		align-items: center;
 		padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(3rem, 6vw, 5rem);
 	}
 
-	@media (min-width: 900px) {
-		.hero {
-			grid-template-columns: minmax(0, 1fr) minmax(20rem, 27rem);
-		}
-	}
-
-	@media (max-width: 899px) {
-		.hero {
-			display: block;
-		}
-
-		.product-preview {
-			margin-top: 2.25rem;
-		}
-	}
-
 	.hero-copy {
 		min-width: 0;
+		max-width: 46rem;
 	}
 
 	.eyebrow,
-	.preview-top span,
-	.readiness span,
 	.explain span {
 		font: 850 0.66rem/1 "Instrument Sans Variable", sans-serif;
 		letter-spacing: 0.16em;
@@ -244,100 +192,6 @@
 
 	.secondary-action {
 		min-width: 10rem;
-	}
-
-	.product-preview {
-		width: 100%;
-		max-width: 27rem;
-		justify-self: end;
-		border: 1px solid rgba(185, 157, 98, 0.28);
-		background: rgba(10, 25, 18, 0.76);
-		box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
-		backdrop-filter: blur(10px);
-		padding: 1rem;
-	}
-
-	.preview-top {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 1rem;
-		border-bottom: 1px solid rgba(185, 157, 98, 0.18);
-		padding-bottom: 0.85rem;
-	}
-
-	.preview-top strong {
-		font: 700 0.8rem/1 "IBM Plex Mono", monospace;
-		color: #f2ddb0;
-	}
-
-	.readiness {
-		display: grid;
-		gap: 0.8rem;
-		margin-top: 1rem;
-		border: 1px solid rgba(185, 157, 98, 0.18);
-		background: rgba(7, 17, 13, 0.55);
-		padding: 0.85rem;
-	}
-
-	.readiness div {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: 1rem;
-	}
-
-	.readiness strong {
-		font: 700 1.7rem/1 "IBM Plex Mono", monospace;
-		color: #f2ddb0;
-	}
-
-	.readiness i {
-		display: block;
-		height: 0.5rem;
-		background: rgba(185, 157, 98, 0.18);
-	}
-
-	.readiness b {
-		display: block;
-		width: 82%;
-		height: 100%;
-		background: #c1a567;
-	}
-
-	.lane-list {
-		display: grid;
-		gap: 0.55rem;
-		margin-top: 0.8rem;
-	}
-
-	.lane-row {
-		gap: 0.7rem;
-		border: 1px solid rgba(185, 157, 98, 0.18);
-		background: rgba(7, 17, 13, 0.42);
-		padding: 0.8rem;
-		color: #c1a567;
-	}
-
-	.lane-row div {
-		min-width: 0;
-		flex: 1;
-	}
-
-	.lane-row strong,
-	.lane-row span {
-		display: block;
-	}
-
-	.lane-row strong {
-		font-size: 0.9rem;
-		color: #f3ead5;
-	}
-
-	.lane-row span {
-		margin-top: 0.22rem;
-		font-size: 0.78rem;
-		color: #8d9a90;
 	}
 
 	.explain {
